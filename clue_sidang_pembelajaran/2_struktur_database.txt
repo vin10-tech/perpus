@@ -1,0 +1,143 @@
+
+==============================================
+STRUKTUR DATABASE SISTEM PERPUSTAKAAN
+==============================================
+
+1. OVERVIEW DATABASE
+===================
+Database Name: perpustakaan_smk_ymik
+Total Tables: 6 tables
+Storage Engine: InnoDB (untuk foreign key support)
+Charset: utf8mb4_unicode_ci (support emoji dan karakter khusus)
+
+2. TABEL DAN RELASI
+==================
+
+A. TABEL BUKU
+=============
+CREATE TABLE buku (
+    id_buku INT PRIMARY KEY AUTO_INCREMENT,
+    kode_buku VARCHAR(20) UNIQUE NOT NULL,
+    judul_buku VARCHAR(255) NOT NULL,
+    pengarang VARCHAR(100) NOT NULL,
+    penerbit VARCHAR(100) NOT NULL,
+    tahun_terbit YEAR NOT NULL,
+    kategori VARCHAR(50) NOT NULL,
+    stok_total INT DEFAULT 0,
+    stok_tersedia INT DEFAULT 0,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+Fungsi: Menyimpan data koleksi buku perpustakaan
+Index: kode_buku (UNIQUE), kategori, pengarang
+
+B. TABEL SISWA
+==============
+CREATE TABLE siswa (
+    id_siswa INT PRIMARY KEY AUTO_INCREMENT,
+    nis VARCHAR(20) UNIQUE NOT NULL,
+    nama_siswa VARCHAR(100) NOT NULL,
+    kelas VARCHAR(10) NOT NULL,
+    jurusan VARCHAR(50) NOT NULL,
+    kontak VARCHAR(15),
+    status ENUM('aktif','non-aktif') DEFAULT 'aktif',
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+Fungsi: Data siswa yang dapat meminjam buku
+Index: nis (UNIQUE), kelas, jurusan
+
+C. TABEL PETUGAS
+================
+CREATE TABLE petugas (
+    id_petugas INT PRIMARY KEY AUTO_INCREMENT,
+    username VARCHAR(50) UNIQUE NOT NULL,
+    password VARCHAR(255) NOT NULL,
+    nama_petugas VARCHAR(100) NOT NULL,
+    level ENUM('admin','petugas') DEFAULT 'petugas',
+    status ENUM('aktif','non-aktif') DEFAULT 'aktif',
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+Fungsi: Data petugas yang mengelola sistem
+Index: username (UNIQUE), level
+
+D. TABEL PEMINJAMAN
+===================
+CREATE TABLE peminjaman (
+    id_pinjam INT PRIMARY KEY AUTO_INCREMENT,
+    id_siswa INT NOT NULL,
+    id_buku INT NOT NULL,
+    id_petugas INT NOT NULL,
+    tanggal_pinjam DATE NOT NULL,
+    tanggal_jatuh_tempo DATE NOT NULL,
+    status ENUM('dipinjam','dikembalikan') DEFAULT 'dipinjam',
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (id_siswa) REFERENCES siswa(id_siswa),
+    FOREIGN KEY (id_buku) REFERENCES buku(id_buku),
+    FOREIGN KEY (id_petugas) REFERENCES petugas(id_petugas)
+);
+
+Fungsi: Transaksi peminjaman buku
+Relasi: Many-to-One dengan siswa, buku, petugas
+
+E. TABEL PENGEMBALIAN
+=====================
+CREATE TABLE pengembalian (
+    id_kembali INT PRIMARY KEY AUTO_INCREMENT,
+    id_pinjam INT NOT NULL,
+    tanggal_kembali DATE NOT NULL,
+    kondisi_buku ENUM('baik','rusak','hilang') DEFAULT 'baik',
+    denda DECIMAL(10,2) DEFAULT 0,
+    status_denda ENUM('lunas','belum_lunas') DEFAULT 'lunas',
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (id_pinjam) REFERENCES peminjaman(id_pinjam)
+);
+
+Fungsi: Transaksi pengembalian dan denda
+Relasi: One-to-One dengan peminjaman
+
+F. TABEL DENDA
+==============
+CREATE TABLE denda (
+    id_denda INT PRIMARY KEY AUTO_INCREMENT,
+    id_kembali INT NOT NULL,
+    jenis_denda ENUM('terlambat','rusak','hilang') NOT NULL,
+    jumlah_denda DECIMAL(10,2) NOT NULL,
+    status ENUM('lunas','belum_lunas') DEFAULT 'belum_lunas',
+    tanggal_bayar DATE NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (id_kembali) REFERENCES pengembalian(id_kembali)
+);
+
+Fungsi: Detail denda yang harus dibayar
+Relasi: One-to-Many dengan pengembalian
+
+3. RELASI ANTAR TABEL
+====================
+siswa (1) -----> (M) peminjaman
+buku (1) -----> (M) peminjaman  
+petugas (1) -----> (M) peminjaman
+peminjaman (1) -----> (1) pengembalian
+pengembalian (1) -----> (M) denda
+
+4. INDEKS DAN OPTIMASI
+=====================
+- Primary Key: Auto increment untuk performa
+- Foreign Key: Menjaga integritas referensial
+- Index pada kolom yang sering di-query
+- Constraint UNIQUE pada field penting
+
+5. DATA SAMPLE PENTING
+=====================
+- Admin default: username=admin, password=admin123
+- Kategori buku: Fiksi, Non-Fiksi, Referensi, dll
+- Status standar: aktif/non-aktif
+- Perhitungan denda: per hari keterlambatan
+
+6. BACKUP DAN MAINTENANCE
+========================
+- Backup rutin setiap minggu
+- Cleanup data lama secara berkala
+- Monitor ukuran database
+- Optimasi query yang lambat

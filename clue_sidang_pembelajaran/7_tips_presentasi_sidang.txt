@@ -1,0 +1,271 @@
+
+==============================================
+TIPS PRESENTASI SIDANG SKRIPSI
+==============================================
+
+1. PERSIAPAN PRESENTASI
+======================
+
+A. Struktur Presentasi (15-20 menit):
+1. Pembukaan (1 menit)
+   - Salam dan perkenalan
+   - Judul skripsi
+   - Outline presentasi
+
+2. Latar Belakang (2-3 menit)
+   - Masalah yang dihadapi perpustakaan
+   - Kebutuhan sistem digital
+   - Alasan memilih SMK YMIK Jakarta
+
+3. Tujuan dan Manfaat (2 menit)
+   - Tujuan penelitian
+   - Manfaat untuk sekolah
+   - Target user system
+
+4. Metodologi (2-3 menit)
+   - Metode pengembangan (SDLC)
+   - Tools dan teknologi
+   - Tahapan development
+
+5. Hasil dan Pembahasan (8-10 menit)
+   - Demo sistem lengkap
+   - Fitur-fitur utama
+   - Database design
+   - Security implementation
+
+6. Penutup (1-2 menit)
+   - Kesimpulan
+   - Saran pengembangan
+   - Terima kasih
+
+B. Persiapan Teknis:
+- Laptop dengan sistem berjalan
+- Backup di flashdisk/cloud
+- Extension cord dan HDMI cable
+- Hotspot mobile sebagai backup internet
+- Print presentasi (backup)
+- Database dengan sample data lengkap
+
+2. DEMO SISTEM
+=============
+
+A. Skenario Demo (urutan logis):
+
+1. Login System
+   - Show login page
+   - Demo login sebagai admin
+   - Explain session management
+
+2. Dashboard Overview
+   - Statistics overview
+   - Quick actions
+   - Navigation explanation
+
+3. Master Data Management
+   - Tambah buku baru
+   - Tambah siswa baru
+   - Show validation
+
+4. Core Business Process
+   - Proses peminjaman lengkap
+   - Proses pengembalian dengan denda
+   - Print receipt
+
+5. Reporting System
+   - Generate laporan peminjaman
+   - Export to PDF
+   - Dashboard statistics
+
+6. User Management
+   - Tambah petugas baru
+   - Show role-based access
+
+B. Data Demo yang Disiapkan:
+- 20+ data buku dengan kategori beragam
+- 15+ data siswa dari berbagai kelas
+- 10+ transaksi peminjaman (aktif dan selesai)
+- Beberapa transaksi dengan denda
+- User dengan level berbeda
+
+3. ANTISIPASI PERTANYAAN
+=======================
+
+A. Pertanyaan Teknis:
+
+Q: "Mengapa memilih PHP dan MySQL?"
+A: "PHP mudah dipelajari, banyak dokumentasi, hosting murah. MySQL reliable, support relational database, gratis. Cocok untuk aplikasi perpustakaan skala menengah."
+
+Q: "Bagaimana security sistem ini?"
+A: "Implement password hashing, prepared statements untuk prevent SQL injection, input validation, session management, role-based access control."
+
+Q: "Bagaimana backup data?"
+A: "Regular database backup via phpMyAdmin export, scheduled backup ke cloud storage, version control untuk source code."
+
+Q: "Scalability sistem ini?"
+A: "Database design sudah normalized, index pada field penting, bisa handle ribuan transaksi. Untuk scale up bisa upgrade server atau optimize query."
+
+B. Pertanyaan Fungsional:
+
+Q: "Fitur apa yang belum ada?"
+A: "Yang belum: notification system, email reminder, mobile app, barcode scanner. Ini bisa jadi future enhancement."
+
+Q: "Bagaimana handle multiple user concurrent?"
+A: "PHP support multi-user, MySQL handle concurrent connections, transaction untuk data consistency."
+
+Q: "Testing yang dilakukan?"
+A: "Unit testing untuk setiap function, integration testing untuk workflow, user acceptance testing dengan sample user."
+
+C. Pertanyaan Metodologi:
+
+Q: "Mengapa pakai waterfall/agile?"
+A: "Waterfall cocok karena requirement jelas, timeline fixed, team kecil. Agile untuk iterative development dan user feedback."
+
+Q: "Bagaimana requirement gathering?"
+A: "Interview dengan kepala perpustakaan, observasi proses manual, analisis sistem existing, benchmark sistem lain."
+
+4. BODY LANGUAGE DAN KOMUNIKASI
+==============================
+
+A. Postur dan Gesture:
+- Berdiri tegak, tidak bersandar
+- Eye contact dengan semua penguji
+- Gesture natural, tidak berlebihan
+- Jangan main-main dengan pointer/alat
+- Speak clearly dan tidak terburu-buru
+
+B. Handling Demo:
+- Explain setiap langkah yang dilakukan
+- Jangan langsung klik, explain dulu
+- Jika ada error, tetap tenang dan explain
+- Prepare alternate scenario jika demo gagal
+- Show source code jika diminta
+
+C. Menjawab Pertanyaan:
+- Dengar pertanyaan sampai selesai
+- Pause sebentar sebelum jawab
+- Jawab to the point, tidak bertele-tele
+- Jika tidak tahu, jujur dan offer to research
+- Thank you after each question
+
+5. SLIDE PRESENTATION
+====================
+
+A. Design Guidelines:
+- Clean dan professional layout
+- Consistent font (Arial/Calibri 24pt+)
+- High contrast (dark text, light background)
+- Minimal text per slide (6x6 rule)
+- High quality screenshots
+- Professional color scheme
+
+B. Essential Slides:
+1. Title slide (judul, nama, NPM, pembimbing)
+2. Agenda/Outline
+3. Problem statement
+4. Objectives
+5. System overview
+6. Technology stack
+7. Database design (ERD)
+8. System architecture
+9. Screenshots key features
+10. Testing results
+11. Conclusion
+12. Future work
+13. Thank you
+
+C. Screenshot Guidelines:
+- Full screen captures
+- Hide browser address bar
+- Clean data (no lorem ipsum)
+- Highlight important parts
+- Consistent UI appearance
+
+6. TROUBLESHOOTING DEMO
+======================
+
+A. Common Issues:
+- Internet connection problem
+  → Use local xampp installation
+  → Prepare offline demo
+  → Mobile hotspot backup
+
+- Projector connection issue
+  → HDMI to VGA adapter
+  → Lower screen resolution
+  → Mirror display setting
+
+- Code error during demo
+  → Stay calm and debug
+  → Have backup database
+  → Explain the intended behavior
+
+B. Backup Plans:
+- Print screenshots sebagai fallback
+- Video recording demo (last resort)
+- Slide dengan code snippets
+- Explain algoritma tanpa demo
+
+7. MENTAL PREPARATION
+====================
+
+A. Confidence Building:
+- Practice demo 5-10 kali
+- Record diri sendiri presentasi
+- Mock presentation dengan teman
+- Familiar dengan semua fitur sistem
+- Prepare answer untuk common questions
+
+B. Stress Management:
+- Tidur cukup malam sebelumnya
+- Sarapan yang baik
+- Datang 30 menit lebih awal
+- Breathing exercise sebelum mulai
+- Positive mindset
+
+C. Professional Attitude:
+- Dress formally dan rapi
+- Bring business card (optional)
+- Respect waktu yang diberikan
+- Thank penguji untuk waktu dan feedback
+- Professional response terhadap kritik
+
+8. FOLLOW-UP ACTIONS
+===================
+
+A. After Presentation:
+- Note semua feedback dan saran
+- Thank penguji via email (optional)
+- Implement improvement suggestions
+- Document lessons learned
+
+B. Revision Planning:
+- Prioritize feedback berdasarkan impact
+- Timeline untuk implement changes  
+- Re-test setelah revision
+- Prepare final documentation
+
+CATATAN PENTING:
+===============
+- Authenticity beats perfection
+- Show passion untuk project Anda  
+- Admit limitations dan show learning
+- Focus pada problem solving
+- Demonstrate technical competency
+- Show business value dari sistem
+
+CHECKLIST HARI H:
+================
+□ Laptop fully charged + charger
+□ Extension cord
+□ HDMI cable + adapter  
+□ Mobile hotspot active
+□ System running locally
+□ Database with sample data
+□ Presentation file ready
+□ Print backup slides
+□ Business formal attired
+□ Arrive 30 minutes early
+□ Positive mindset
+□ Ready to learn and improve
+
+Remember: Sidang adalah kesempatan untuk show kemampuan Anda dan mendapat feedback berharga dari experts. Enjoy the process!

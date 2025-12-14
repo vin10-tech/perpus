@@ -1,0 +1,175 @@
+
+==============================================
+FITUR UTAMA SISTEM PERPUSTAKAAN
+==============================================
+
+1. MODUL MANAJEMEN BUKU
+=======================
+
+A. Fitur CRUD Buku:
+- CREATE: Tambah buku baru dengan validasi
+- READ: Tampil data buku dengan pagination
+- UPDATE: Edit data buku dan tambah stok
+- DELETE: Hapus buku (dengan konfirmasi)
+
+B. Fitur Khusus:
+- Pencarian buku (judul, pengarang, kategori)
+- Filter berdasarkan kategori
+- Manajemen stok otomatis
+- Barcode/QR code untuk buku
+- Laporan stok buku
+
+C. Validasi:
+- Kode buku harus unique
+- Stok tidak boleh minus
+- Tahun terbit dalam range valid
+- Format input yang benar
+
+2. MODUL MANAJEMEN SISWA
+========================
+
+A. Fitur CRUD Siswa:
+- Registrasi siswa baru
+- View profil siswa lengkap
+- Update data siswa
+- Nonaktifkan siswa
+
+B. Fitur Khusus:
+- Pencarian siswa (NIS, nama, kelas)
+- Filter berdasarkan kelas/jurusan
+- History peminjaman siswa
+- Status aktif/non-aktif
+- Validasi NIS unique
+
+C. Informasi Siswa:
+- Data pribadi lengkap
+- Riwayat peminjaman
+- Denda yang harus dibayar
+- Status keanggotaan
+
+3. MODUL PEMINJAMAN
+==================
+
+A. Proses Peminjaman:
+- Pilih siswa peminjam
+- Pilih buku yang dipinjam
+- Set tanggal jatuh tempo otomatis (7 hari)
+- Generate kode peminjaman
+- Update stok buku otomatis
+
+B. Fitur Khusus:
+- Multi-book selection (pilih beberapa buku)
+- Validasi stok tersedia
+- Cek maksimal buku per siswa (3 buku)
+- Cek denda tertunggak
+- Print struk peminjaman
+
+C. Business Rules:
+- Maksimal 7 hari peminjaman
+- Maksimal 3 buku per siswa
+- Tidak bisa pinjam jika ada denda
+- Stok harus tersedia
+
+4. MODUL PENGEMBALIAN
+====================
+
+A. Proses Pengembalian:
+- Scan/input kode peminjaman
+- Cek kondisi buku
+- Hitung denda otomatis
+- Update status peminjaman
+- Return stok buku
+
+B. Perhitungan Denda:
+- Denda keterlambatan: Rp 1000/hari
+- Denda kerusakan: Rp 10000
+- Denda kehilangan: 100% harga buku
+- Status lunas/belum lunas
+
+C. Fitur Khusus:
+- Multiple return (beberapa buku sekaligus)
+- Print receipt pengembalian
+- History pengembalian
+- Manajemen denda
+
+5. MODUL PETUGAS
+===============
+
+A. Manajemen User:
+- CRUD data petugas
+- Level akses (admin/petugas)
+- Change password
+- Status aktif/non-aktif
+
+B. Hak Akses:
+- Admin: Full access semua fitur
+- Petugas: Terbatas sesuai kebutuhan
+- Login dengan session management
+- Logout otomatis jika idle
+
+6. MODUL LAPORAN
+===============
+
+A. Jenis Laporan:
+- Laporan peminjaman (harian/bulanan)
+- Laporan pengembalian
+- Laporan denda
+- Laporan stok buku
+- Laporan siswa aktif
+
+B. Format Output:
+- View di browser
+- Export ke PDF
+- Print langsung
+- Filter berdasarkan periode
+
+C. Dashboard Statistics:
+- Total buku
+- Total siswa
+- Peminjaman aktif
+- Denda tertunggak
+- Buku terpopuler
+
+7. FITUR KEAMANAN
+================
+
+A. Authentication:
+- Login dengan username/password
+- Session management
+- Auto logout
+- Password hashing (MD5/SHA256)
+
+B. Authorization:
+- Role-based access control
+- Menu sesuai level user
+- Validasi akses setiap halaman
+
+C. Data Security:
+- SQL injection prevention
+- XSS protection
+- Input sanitization
+- CSRF protection
+
+8. USER INTERFACE
+================
+
+A. Design Modern:
+- Responsive design (mobile-friendly)
+- Bootstrap framework
+- Font Awesome icons
+- Gradient background
+- Card-based layout
+
+B. User Experience:
+- Intuitive navigation
+- Loading indicators
+- Success/error messages
+- Confirmation dialogs
+- Search functionality
+
+C. Dashboard Features:
+- Quick actions
+- Recent activities
+- Statistics cards
+- Popular books
+- Status overview

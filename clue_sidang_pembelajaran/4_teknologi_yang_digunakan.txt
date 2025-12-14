@@ -1,0 +1,231 @@
+
+==============================================
+TEKNOLOGI YANG DIGUNAKAN
+==============================================
+
+1. BACKEND TECHNOLOGY
+=====================
+
+A. PHP (Personal Home Page)
+- Versi: PHP 7.4+
+- Server-side scripting language
+- Open source dan gratis
+- Mudah dipelajari untuk pemula
+- Support database MySQL yang baik
+- Banyak dokumentasi dan komunitas
+
+B. Alasan Memilih PHP:
+- Cocok untuk aplikasi web dinamis
+- Integrasi mudah dengan MySQL
+- Hosting murah dan mudah ditemukan  
+- Syntax mirip dengan bahasa C
+- Built-in function untuk web development
+- Session management yang mudah
+
+C. PHP Features yang Digunakan:
+- $_POST, $_GET untuk form handling
+- $_SESSION untuk login system
+- mysqli untuk database connection
+- include/require untuk modular code
+- header() untuk redirect
+- password_hash() untuk security
+
+2. DATABASE MANAGEMENT
+=====================
+
+A. MySQL Database
+- Versi: MySQL 5.7+
+- Relational Database Management System
+- ACID compliance
+- Support Foreign Key
+- Optimasi query yang baik
+- Backup dan recovery mudah
+
+B. Alasan Memilih MySQL:
+- Gratis dan open source
+- Performa baik untuk aplikasi medium
+- Kompatibel dengan PHP
+- Tool phpMyAdmin untuk management
+- Documentation lengkap
+- Stable dan reliable
+
+C. MySQL Features:
+- AUTO_INCREMENT untuk primary key
+- FOREIGN KEY untuk relasi tabel
+- INDEX untuk optimasi query
+- ENUM untuk pilihan terbatas
+- TIMESTAMP untuk audit trail
+- Stored procedures (jika diperlukan)
+
+3. FRONTEND TECHNOLOGY
+=====================
+
+A. HTML5 (HyperText Markup Language)
+- Struktur dasar halaman web
+- Semantic elements (header, main, footer)
+- Form elements untuk input data
+- Meta tags untuk SEO
+- Responsive viewport setting
+
+B. CSS3 (Cascading Style Sheets)
+- Custom CSS properties (CSS Variables)
+- Flexbox dan Grid layout
+- Gradient backgrounds
+- Box shadow dan border radius
+- Media queries untuk responsive
+- Animations dan transitions
+
+C. JavaScript (Client-side)
+- Form validation
+- Dynamic content manipulation
+- AJAX untuk asynchronous requests
+- Event handling (click, submit, etc)
+- DOM manipulation
+- Local storage untuk client data
+
+4. CSS FRAMEWORK
+===============
+
+A. Bootstrap 5.3
+- Mobile-first responsive framework
+- Pre-built components (cards, modals, etc)
+- Grid system 12-column
+- Utility classes
+- JavaScript components
+- Cross-browser compatibility
+
+B. Komponen Bootstrap yang Digunakan:
+- Navbar untuk navigation
+- Cards untuk data display
+- Modals untuk pop-up forms
+- Buttons dengan various styles
+- Form controls dan validation
+- Tables dengan pagination
+- Alerts untuk notifications
+
+5. ICON LIBRARY
+==============
+
+A. Font Awesome 6.4
+- Vector-based icons
+- Scalable tanpa loss quality
+- Consistent design style
+- Banyak pilihan icon
+- Easy to implement
+- CDN delivery yang cepat
+
+B. Icons yang Digunakan:
+- fas fa-book untuk buku
+- fas fa-users untuk siswa
+- fas fa-hand-holding untuk peminjaman
+- fas fa-undo untuk pengembalian
+- fas fa-chart-bar untuk laporan
+- fas fa-user-tie untuk petugas
+
+6. WEB SERVER
+============
+
+A. Apache HTTP Server
+- Open source web server  
+- .htaccess untuk URL rewriting
+- Virtual hosts untuk multiple sites
+- SSL/TLS support
+- Module extension yang kaya
+- Cross-platform (Windows, Linux, Mac)
+
+B. Konfigurasi Apache:
+- Document root ke folder project
+- Directory index ke index.php
+- Error pages custom
+- Security headers
+- Gzip compression
+- Cache control
+
+7. DEVELOPMENT TOOLS
+===================
+
+A. Text Editor/IDE:
+- Visual Studio Code (recommended)
+- Sublime Text
+- PHPStorm (professional)
+- NetBeans
+- Atom (deprecated)
+
+B. Browser DevTools:
+- Chrome Developer Tools
+- Firefox Developer Tools
+- Network tab untuk AJAX debugging
+- Console untuk JavaScript errors
+- Elements inspector untuk CSS
+- Performance profiler
+
+C. Database Tools:
+- phpMyAdmin (web-based)
+- MySQL Workbench (desktop)
+- HeidiSQL (Windows)
+- Sequel Pro (Mac)
+- Command line mysql client
+
+8. VERSION CONTROL
+=================
+
+A. Git untuk Source Code Management:
+- Repository initialization
+- Commit changes dengan message
+- Branch untuk fitur development
+- Merge untuk gabungkan changes
+- Remote repository (GitHub, GitLab)
+- Backup otomatis code
+
+B. Best Practices:
+- Commit frequently dengan message jelas
+- Use .gitignore untuk file sensitive
+- Branch naming convention
+- Pull request untuk code review
+- Tag untuk release version
+
+9. SECURITY MEASURES
+===================
+
+A. Input Validation:
+- Server-side validation
+- Client-side pre-validation  
+- SQL injection prevention
+- XSS (Cross-Site Scripting) protection
+- CSRF token untuk forms
+- File upload validation
+
+B. Authentication & Authorization:
+- Password hashing (tidak plain text)
+- Session management yang aman
+- Role-based access control
+- Login attempt limitation
+- Auto logout untuk security
+- Strong password policy
+
+10. PERFORMANCE OPTIMIZATION
+===========================
+
+A. Database Optimization:
+- Proper indexing
+- Query optimization
+- Connection pooling
+- Avoid N+1 query problem
+- Database normalization
+- Regular maintenance
+
+B. Frontend Optimization:
+- CSS/JS minification
+- Image optimization
+- Browser caching
+- CDN untuk static assets
+- Lazy loading untuk images
+- Gzip compression
+
+C. Server Optimization:
+- OpCode caching (OPcache)
+- Memory limit optimization
+- Error reporting configuration
+- Session cleanup
+- Log rotation
+- Regular updates

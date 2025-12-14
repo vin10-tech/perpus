@@ -1,0 +1,254 @@
+
+==============================================
+ALUR SISTEM DAN FLOWCHART
+==============================================
+
+1. ALUR UTAMA SISTEM
+====================
+
+A. Flow Sistem Keseluruhan:
+[START] → [LOGIN] → [DASHBOARD] → [PILIH MODUL] → [PROSES DATA] → [LOGOUT]
+
+B. Penjelasan Alur:
+1. User mengakses sistem via browser
+2. Sistem cek session, jika belum login redirect ke login page
+3. User input username/password
+4. Sistem validasi credentials di database
+5. Jika valid, create session dan redirect ke dashboard
+6. User dapat mengakses berbagai modul sesuai hak akses
+7. Setiap aksi dicatat untuk audit trail
+8. User logout atau session expire
+
+2. FLOWCHART LOGIN SYSTEM
+========================
+
+START
+  ↓
+[Akses Halaman Login]
+  ↓
+[Input Username & Password]
+  ↓
+[Submit Form]
+  ↓
+{Validasi Input} → [Tidak Valid] → [Tampil Error] → [Kembali ke Form]
+  ↓ [Valid]
+{Cek Database} → [User Tidak Ditemukan] → [Tampil Error] → [Kembali ke Form]
+  ↓ [User Ditemukan]
+{Cek Password} → [Password Salah] → [Tampil Error] → [Kembali ke Form]
+  ↓ [Password Benar]
+{Cek Status User} → [Non-Aktif] → [Tampil Error] → [Kembali ke Form]
+  ↓ [Aktif]
+[Create Session]
+  ↓
+[Redirect ke Dashboard]
+  ↓
+END
+
+3. FLOWCHART PEMINJAMAN BUKU
+===========================
+
+START
+  ↓
+[Akses Halaman Peminjaman]
+  ↓
+[Pilih Siswa Peminjam]
+  ↓
+{Cek Status Siswa} → [Non-Aktif] → [Tampil Error]
+  ↓ [Aktif]
+{Cek Denda Tertunggak} → [Ada Denda] → [Tampil Peringatan]
+  ↓ [Tidak Ada Denda]
+{Cek Jumlah Pinjaman Aktif} → [≥3 Buku] → [Tampil Error]
+  ↓ [<3 Buku]
+[Pilih Buku yang Dipinjam]
+  ↓
+{Cek Stok Buku} → [Stok Kosong] → [Tampil Error]
+  ↓ [Stok Tersedia]
+[Set Tanggal Jatuh Tempo (+7 hari)]
+  ↓
+[Konfirmasi Peminjaman]
+  ↓
+{User Konfirmasi} → [Batal] → [Kembali ke Form]
+  ↓ [OK]
+[INSERT ke tabel peminjaman]
+  ↓
+[UPDATE stok buku (-1)]
+  ↓
+[Generate Kode Peminjaman]
+  ↓
+[Tampil Sukses + Option Print]
+  ↓
+END
+
+4. FLOWCHART PENGEMBALIAN BUKU
+=============================
+
+START
+  ↓
+[Input Kode Peminjaman]
+  ↓
+{Cek Database} → [Tidak Ditemukan] → [Tampil Error]
+  ↓ [Ditemukan]
+{Cek Status} → [Sudah Dikembalikan] → [Tampil Error]
+  ↓ [Belum Dikembalikan]
+[Tampil Data Peminjaman]
+  ↓
+[Input Kondisi Buku (Baik/Rusak/Hilang)]
+  ↓
+{Hitung Denda}:
+  - Cek keterlambatan
+  - Cek kondisi buku
+  - Kalkulasi total denda
+  ↓
+[Tampil Total Denda]
+  ↓
+[Konfirmasi Pengembalian]
+  ↓
+{User Konfirmasi} → [Batal] → [Kembali ke Form]
+  ↓ [OK]
+[INSERT ke tabel pengembalian]
+  ↓
+[UPDATE status peminjaman]
+  ↓
+[UPDATE stok buku (+1)]
+  ↓
+{Ada Denda} → [INSERT ke tabel denda]
+  ↓
+[Tampil Sukses + Option Print Receipt]
+  ↓
+END
+
+5. FLOWCHART MANAJEMEN BUKU
+==========================
+
+A. Tambah Buku:
+START → [Form Input] → [Validasi] → {Valid?} → [Simpan] → [Sukses] → END
+                                        ↓ [Tidak]
+                                   [Tampil Error] → [Kembali Form]
+
+B. Edit Buku:
+START → [Pilih Buku] → [Load Data] → [Form Edit] → [Validasi] → [Update] → END
+
+C. Hapus Buku:
+START → [Pilih Buku] → {Cek Peminjaman Aktif} → [Konfirmasi] → [Hapus] → END
+                           ↓ [Ada]
+                      [Tampil Error]
+
+6. FLOWCHART LAPORAN
+===================
+
+START
+  ↓
+[Pilih Jenis Laporan]
+  ↓
+[Set Parameter (Tanggal, Filter, dll)]
+  ↓
+[Submit Request]
+  ↓
+{Query Database}
+  ↓
+{Ada Data?} → [Tidak Ada] → [Tampil "No Data"]
+  ↓ [Ada Data]
+[Generate Laporan]
+  ↓
+[Tampil di Browser]
+  ↓
+{User Action}:
+  - Print → [Window Print]
+  - PDF → [Generate PDF]
+  - Kembali → [Kembali ke Form]
+  ↓
+END
+
+7. STATE DIAGRAM PEMINJAMAN
+==========================
+
+[TERSEDIA] → (pinjam) → [DIPINJAM] → (kembalikan) → [DIKEMBALIKAN]
+     ↑                                                    ↓
+     ←←←←←←←←←←← (stok bertambah) ←←←←←←←←←←←←←←←←←←←←←←←←←←←
+
+Status Buku:
+- TERSEDIA: Stok > 0, bisa dipinjam
+- DIPINJAM: Sedang dipinjam siswa
+- DIKEMBALIKAN: Sudah dikembalikan, stok bertambah
+
+8. SEQUENCE DIAGRAM LOGIN
+========================
+
+User → LoginPage: akses halaman
+LoginPage → User: tampil form login
+User → LoginPage: submit(username, password)
+LoginPage → Database: query user
+Database → LoginPage: return user data
+LoginPage → LoginPage: validasi password
+LoginPage → Session: create session
+Session → LoginPage: session created
+LoginPage → Dashboard: redirect
+Dashboard → User: tampil dashboard
+
+9. USE CASE DIAGRAM
+==================
+
+ADMIN:
+- Login/Logout
+- Kelola Buku (CRUD)
+- Kelola Siswa (CRUD)
+- Kelola Petugas (CRUD)
+- Proses Peminjaman
+- Proses Pengembalian
+- Generate Laporan
+- Kelola Denda
+
+PETUGAS:
+- Login/Logout
+- View Buku
+- View Siswa
+- Proses Peminjaman
+- Proses Pengembalian
+- View Laporan
+- Kelola Denda
+
+10. BUSINESS RULES
+=================
+
+A. Aturan Peminjaman:
+- Maksimal 3 buku per siswa
+- Durasi peminjaman 7 hari
+- Siswa harus aktif
+- Tidak ada denda tertunggak
+- Stok buku harus tersedia
+
+B. Aturan Pengembalian:
+- Denda keterlambatan Rp 1000/hari
+- Denda kerusakan Rp 10000
+- Denda kehilangan 100% harga buku
+- Stok otomatis bertambah
+
+C. Aturan Akses:
+- Session timeout 30 menit
+- Admin full access
+- Petugas limited access
+- Guest tidak ada access
+
+11. ERROR HANDLING FLOW
+======================
+
+[Error Terjadi]
+  ↓
+{Jenis Error}:
+  - Database → [Log Error] → [Tampil "System Error"]
+  - Validation → [Tampil Error Message] → [Kembali Form]
+  - Permission → [Redirect Login] → [Tampil "Access Denied"]
+  - File → [Log Error] → [Tampil "File Error"]
+  ↓
+[User Action Required]
+  ↓
+END
+
+12. BACKUP & RECOVERY FLOW
+=========================
+
+[Scheduled Backup] → [Export Database] → [Save to File] → [Verify Backup]
+                                                              ↓
+[Recovery Needed] ← [System Failure] ← [Data Corruption] ← [Backup OK?]
+       ↓                                                        ↓ [Not OK]
+[Stop Services] → [Restore Database] → [Verify Data] → [Start Services]

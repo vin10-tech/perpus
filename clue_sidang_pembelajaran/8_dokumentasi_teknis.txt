@@ -1,0 +1,395 @@
+
+==============================================
+DOKUMENTASI TEKNIS SISTEM
+==============================================
+
+1. SISTEM REQUIREMENTS
+======================
+
+A. Hardware Requirements:
+- Processor: Intel Core i3 atau AMD equivalent
+- RAM: Minimum 4GB, Recommended 8GB
+- Storage: Minimum 500MB free space
+- Network: Internet connection untuk CDN resources
+
+B. Software Requirements:
+- Operating System: Windows 10/11, macOS, atau Linux
+- Web Server: Apache 2.4+ atau Nginx
+- PHP: Version 7.4 atau higher
+- MySQL: Version 5.7 atau higher
+- Browser: Chrome 90+, Firefox 88+, Safari 14+
+
+C. Development Tools:
+- Text Editor: VS Code, Sublime Text, atau PHPStorm
+- Database Tool: phpMyAdmin atau MySQL Workbench
+- Version Control: Git
+- Browser DevTools untuk debugging
+
+2. INSTALLATION GUIDE
+=====================
+
+A. Local Development Setup:
+
+1. Install XAMPP:
+   - Download dari https://www.apachefriends.org/
+   - Install dengan default settings
+   - Start Apache dan MySQL services
+
+2. Setup Database:
+   - Buka phpMyAdmin (http://localhost/phpmyadmin)
+   - Create database: perpustakaan_smk_ymik
+   - Import file database.sql
+   - Verify semua tables terbuat
+
+3. Deploy Source Code:
+   - Copy project folder ke htdocs/
+   - Atau clone dari repository:
+     git clone [repository-url] perpustakaan_smk_ymik
+
+4. Configuration:
+   - Edit config/database.php
+   - Sesuaikan database credentials
+   - Test connection
+
+5. Access System:
+   - Browser: http://localhost/perpustakaan_smk_ymik
+   - Login: admin / admin123
+
+B. Production Deployment:
+
+1. Web Hosting Setup:
+   - Shared hosting dengan PHP+MySQL support
+   - Upload files via FTP/File Manager
+   - Create database di hosting control panel
+
+2. Domain Configuration:
+   - Point domain ke hosting
+   - SSL certificate installation
+   - .htaccess configuration
+
+3. Security Hardening:
+   - Change default passwords
+   - Database user permissions
+   - File permissions setting
+   - Security headers configuration
+
+3. DATABASE DOCUMENTATION
+========================
+
+A. Database Schema:
+
+Tabel: buku
+-----------
+id_buku (INT, PRIMARY KEY, AUTO_INCREMENT)
+kode_buku (VARCHAR(20), UNIQUE, NOT NULL)
+judul_buku (VARCHAR(255), NOT NULL)
+pengarang (VARCHAR(100), NOT NULL)
+penerbit (VARCHAR(100), NOT NULL)
+tahun_terbit (YEAR, NOT NULL)
+kategori (VARCHAR(50), NOT NULL)
+stok_total (INT, DEFAULT 0)
+stok_tersedia (INT, DEFAULT 0)
+created_at (TIMESTAMP, DEFAULT CURRENT_TIMESTAMP)
+
+Indexes:
+- PRIMARY KEY (id_buku)
+- UNIQUE KEY (kode_buku)
+- INDEX (kategori)
+- INDEX (pengarang)
+
+Tabel: siswa
+------------
+id_siswa (INT, PRIMARY KEY, AUTO_INCREMENT)
+nis (VARCHAR(20), UNIQUE, NOT NULL)
+nama_siswa (VARCHAR(100), NOT NULL)
+kelas (VARCHAR(10), NOT NULL)
+jurusan (VARCHAR(50), NOT NULL)
+kontak (VARCHAR(15))
+status (ENUM('aktif','non-aktif'), DEFAULT 'aktif')
+created_at (TIMESTAMP, DEFAULT CURRENT_TIMESTAMP)
+
+Indexes:
+- PRIMARY KEY (id_siswa)
+- UNIQUE KEY (nis)
+- INDEX (kelas)
+- INDEX (jurusan)
+
+[Continue for all tables...]
+
+B. Relationships:
+- siswa (1) -> (M) peminjaman
+- buku (1) -> (M) peminjaman
+- petugas (1) -> (M) peminjaman
+- peminjaman (1) -> (1) pengembalian
+- pengembalian (1) -> (M) denda
+
+C. Business Rules:
+- Maksimal 3 buku per siswa
+- Durasi peminjaman 7 hari
+- Denda keterlambatan Rp 1000/hari
+- Stok otomatis berkurang saat peminjaman
+
+4. API DOCUMENTATION
+===================
+
+A. Authentication Endpoints:
+
+POST /login.php
+Parameters:
+- username (string, required)
+- password (string, required)
+Response:
+- Success: Redirect to dashboard
+- Error: Error message
+
+POST /logout.php
+Response:
+- Redirect to login page
+
+B. Book Management Endpoints:
+
+GET /buku/index.php
+Parameters:
+- search (string, optional)
+- kategori (string, optional)
+- page (int, optional)
+Response: HTML page with book list
+
+POST /buku/add.php
+Parameters:
+- kode_buku (string, required, unique)
+- judul_buku (string, required)
+- pengarang (string, required)
+- penerbit (string, required)
+- tahun_terbit (year, required)
+- kategori (string, required)
+- stok_total (int, required)
+Response: Success/Error message
+
+[Continue for all endpoints...]
+
+5. FILE STRUCTURE
+================
+
+perpustakaan_smk_ymik/
+├── assets/
+│   ├── css/
+│   │   └── style.css          # Main stylesheet
+│   ├── js/
+│   │   └── main.js           # JavaScript functions
+│   └── images/
+│       └── logo-smk-ymik.png # School logo
+├── config/
+│   ├── database.php          # Database connection
+│   └── session.php           # Session management
+├── includes/
+│   ├── navbar.php            # Top navigation
+│   └── sidebar.php           # Side navigation
+├── buku/
+│   ├── index.php            # Book list
+│   ├── add.php              # Add book form
+│   ├── edit.php             # Edit book form
+│   ├── delete.php           # Delete book
+│   ├── detail.php           # Book details
+│   └── add_stock.php        # Add stock
+├── siswa/ [similar structure]
+├── peminjaman/ [similar structure]
+├── pengembalian/ [similar structure]
+├── petugas/ [similar structure]
+├── laporan/ [similar structure]
+├── denda/ [similar structure]
+├── index.php                # Dashboard
+├── login.php               # Login page
+├── logout.php              # Logout handler
+├── help.php                # Help page
+├── database.sql            # DB structure
+└── README.md               # Project documentation
+
+6. CONFIGURATION FILES
+=====================
+
+A. Database Configuration (config/database.php):
+```php
+<?php
+class Database {
+    private $host = 'localhost';        // Database host
+    private $username = 'root';         // Database username
+    private $password = '';             // Database password
+    private $database = 'perpustakaan_smk_ymik'; // Database name
+    
+    // Connection method
+    public function getConnection() {
+        // Implementation
+    }
+}
+?>
+```
+
+B. Session Configuration (config/session.php):
+```php
+<?php
+session_start();
+
+// Session timeout (30 minutes)
+$timeout = 1800;
+
+// Check session validity
+if (isset($_SESSION['last_activity']) && 
+    (time() - $_SESSION['last_activity'] > $timeout)) {
+    session_destroy();
+    header('Location: ../login.php');
+    exit;
+}
+
+$_SESSION['last_activity'] = time();
+?>
+```
+
+7. SECURITY CONSIDERATIONS
+=========================
+
+A. Input Validation:
+- All user inputs validated server-side
+- Prepared statements for database queries
+- HTML entity encoding for output
+- File upload restrictions
+
+B. Authentication:
+- Password hashing (MD5/SHA256)
+- Session-based authentication
+- Auto logout after timeout
+- Role-based access control
+
+C. Authorization:
+- Page-level access control
+- Menu visibility based on user role
+- Direct URL access prevention
+- CSRF token implementation
+
+8. PERFORMANCE OPTIMIZATION
+===========================
+
+A. Database Optimization:
+- Proper indexing on frequently queried columns
+- Query optimization using EXPLAIN
+- Connection pooling
+- Regular database maintenance
+
+B. Frontend Optimization:
+- CSS/JS minification
+- Image optimization
+- Browser caching headers
+- CDN for external libraries
+
+C. Server Optimization:
+- PHP OPcache enabled
+- Appropriate memory limits
+- Error logging configuration
+- Session cleanup
+
+9. TESTING DOCUMENTATION
+========================
+
+A. Test Cases:
+
+Login Functionality:
+- Test Case 1: Valid login
+  Input: admin/admin123
+  Expected: Redirect to dashboard
+  
+- Test Case 2: Invalid password
+  Input: admin/wrongpass
+  Expected: Error message displayed
+
+Book Management:
+- Test Case 1: Add new book
+  Input: Valid book data
+  Expected: Book saved, success message
+
+- Test Case 2: Duplicate book code
+  Input: Existing book code
+  Expected: Error message about duplicate
+
+[Continue for all features...]
+
+B. Testing Results:
+- All positive test cases: PASS
+- All negative test cases: PASS
+- Browser compatibility: PASS
+- Mobile responsiveness: PASS
+- Performance under load: PASS
+
+10. MAINTENANCE GUIDE
+====================
+
+A. Regular Maintenance:
+- Database backup (weekly)
+- Log file rotation (monthly)
+- Software updates (quarterly)
+- Security patches (as needed)
+
+B. Monitoring:
+- Server resource usage
+- Database performance
+- Error log analysis
+- User activity patterns
+
+C. Troubleshooting:
+- Common issues and solutions
+- Error codes and meanings
+- Contact information for support
+- Escalation procedures
+
+11. BACKUP & RECOVERY
+====================
+
+A. Backup Strategy:
+- Daily automated database backup
+- Weekly full system backup
+- Monthly archive to external storage
+- Quarterly disaster recovery test
+
+B. Recovery Procedures:
+1. Stop all services
+2. Restore database from backup
+3. Verify data integrity
+4. Restart services
+5. Test system functionality
+
+C. Backup Verification:
+- Regular restore tests
+- Data integrity checks
+- Backup file validation
+- Recovery time objectives
+
+12. FUTURE ENHANCEMENTS
+======================
+
+A. Planned Features:
+- Email notification system
+- Mobile application
+- Barcode/QR code integration
+- Advanced reporting dashboard
+- API for third-party integration
+
+B. Technology Upgrades:
+- PHP 8.x migration
+- MySQL 8.x upgrade
+- Modern JavaScript framework
+- Responsive design improvements
+- Progressive Web App features
+
+C. Scalability Improvements:
+- Database sharding
+- Load balancing
+- Caching layer
+- Microservices architecture
+- Cloud deployment
+
+CATATAN PENTING:
+===============
+- Keep documentation updated
+- Version control for documentation
+- Regular review and revision
+- User feedback integration
+- Accessibility compliance

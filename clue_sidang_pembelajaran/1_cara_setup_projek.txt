@@ -1,0 +1,75 @@
+
+==============================================
+PANDUAN SETUP PROJECT SISTEM PERPUSTAKAAN
+==============================================
+
+1. PERSIAPAN ENVIRONMENT
+========================
+- Install XAMPP/WAMP/MAMP (untuk Apache + MySQL + PHP)
+- Pastikan PHP versi 7.4+ dan MySQL 5.7+
+- Text Editor: VS Code, Sublime Text, atau Notepad++
+- Browser: Chrome/Firefox untuk testing
+
+2. STRUKTUR PROJECT
+==================
+perpustakaan_smk_ymik/
+├── assets/
+│   ├── css/
+│   │   └── style.css (styling utama)
+│   └── images/
+├── config/
+│   ├── database.php (konfigurasi database)
+│   └── session.php (manajemen session)
+├── includes/
+│   ├── navbar.php (navigation bar)
+│   └── sidebar.php (sidebar menu)
+├── modules/ (folder untuk setiap modul)
+│   ├── buku/
+│   ├── siswa/
+│   ├── peminjaman/
+│   ├── pengembalian/
+│   ├── petugas/
+│   ├── laporan/
+│   └── denda/
+├── index.php (dashboard utama)
+├── login.php (halaman login)
+├── logout.php (proses logout)
+└── database.sql (struktur database)
+
+3. LANGKAH SETUP
+===============
+A. Database Setup:
+   - Buka phpMyAdmin
+   - Buat database: perpustakaan_smk_ymik
+   - Import file database.sql
+   - Pastikan semua tabel terbuat dengan benar
+
+B. Konfigurasi Database:
+   - Edit config/database.php
+   - Sesuaikan host, username, password sesuai environment
+   - Test koneksi database
+
+C. Web Server:
+   - Copy project ke folder htdocs (XAMPP) atau www (WAMP)
+   - Start Apache dan MySQL service
+   - Akses via browser: http://localhost/perpustakaan_smk_ymik
+
+4. TESTING AWAL
+==============
+- Coba akses halaman login
+- Test login dengan user default
+- Pastikan dashboard muncul dengan benar
+- Test navigasi ke setiap modul
+
+5. TROUBLESHOOTING UMUM
+======================
+- Error 404: Periksa path file dan folder
+- Database error: Cek konfigurasi database.php
+- Session error: Pastikan session_start() ada di setiap halaman
+- CSS tidak load: Periksa path ke assets/css/style.css
+
+CATATAN PENTING:
+- Selalu backup database sebelum modifikasi
+- Gunakan prepared statement untuk query SQL
+- Validasi input dari user untuk keamanan
+- Test di berbagai browser untuk compatibility

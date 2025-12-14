@@ -1,0 +1,348 @@
+
+==============================================
+KEAMANAN DAN VALIDASI SISTEM
+==============================================
+
+1. AUTHENTICATION (AUTENTIKASI)
+===============================
+
+A. Login System:
+- Username dan password wajib
+- Validasi credentials di database
+- Password hashing menggunakan MD5/SHA256
+- Session management untuk maintain login
+- Auto logout setelah idle 30 menit
+- Remember me option (opsional)
+
+B. Session Management:
+```php
+// Start session di setiap halaman
+session_start();
+
+// Cek login status
+if (!isset($_SESSION['user_id'])) {
+    header('Location: login.php');
+    exit;
+}
+
+// Set session timeout
+if (time() - $_SESSION['last_activity'] > 1800) {
+    session_destroy();
+    header('Location: login.php');
+    exit;
+}
+$_SESSION['last_activity'] = time();
+```
+
+C. Password Security:
+- Minimum 6 karakter
+- Kombinasi huruf dan angka (recommended)
+- Hash password sebelum simpan ke database
+- Tidak simpan password plain text
+- Change password feature
+
+2. AUTHORIZATION (OTORISASI)
+===========================
+
+A. Role-Based Access Control:
+- Admin: Full access semua fitur
+- Petugas: Limited access sesuai kebutuhan
+- Level akses disimpan di tabel petugas
+- Cek level di setiap halaman sensitive
+
+B. Menu Access Control:
+```php
+// Cek level user
+$user_level = $_SESSION['level'];
+
+// Tampilkan menu sesuai level
+if ($user_level == 'admin') {
+    // Tampil semua menu
+} elseif ($user_level == 'petugas') {
+    // Tampil menu terbatas
+}
+```
+
+C. Page Access Protection:
+- Setiap halaman cek session
+- Redirect ke login jika belum login
+- Cek hak akses sesuai level user
+- Block direct URL access
+
+3. INPUT VALIDATION
+==================
+
+A. Client-Side Validation (JavaScript):
+```javascript
+// Validasi form sebelum submit
+function validateForm() {
+    var username = document.getElementById('username').value;
+    var password = document.getElementById('password').value;
+    
+    if (username == '' || password == '') {
+        alert('Username dan Password tidak boleh kosong!');
+        return false;
+    }
+    
+    if (password.length < 6) {
+        alert('Password minimal 6 karakter!');
+        return false;
+    }
+    
+    return true;
+}
+```
+
+B. Server-Side Validation (PHP):
+```php
+// Validasi input POST
+if ($_POST) {
+    $username = trim($_POST['username']);
+    $password = trim($_POST['password']);
+    
+    // Cek empty
+    if (empty($username) || empty($password)) {
+        $error = "Username dan Password wajib diisi!";
+    }
+    
+    // Cek panjang
+    if (strlen($password) < 6) {
+        $error = "Password minimal 6 karakter!";
+    }
+    
+    // Cek format email (jika ada)
+    if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        $error = "Format email tidak valid!";
+    }
+}
+```
+
+C. Data Sanitization:
+- Strip HTML tags dari input
+- Escape special characters
+- Trim whitespace
+- Convert ke lowercase/uppercase jika perlu
+
+4. SQL INJECTION PREVENTION
+===========================
+
+A. Prepared Statements:
+```php
+// SALAH - Vulnerable to SQL Injection
+$query = "SELECT * FROM users WHERE username = '" . $_POST['username'] . "'";
+
+// BENAR - Using Prepared Statements
+$stmt = $conn->prepare("SELECT * FROM users WHERE username = ?");
+$stmt->bind_param("s", $_POST['username']);
+$stmt->execute();
+$result = $stmt->get_result();
+```
+
+B. Input Escaping:
+```php
+// Escape input untuk keamanan
+$username = mysqli_real_escape_string($conn, $_POST['username']);
+$password = mysqli_real_escape_string($conn, $_POST['password']);
+```
+
+C. Query Parameterization:
+- Gunakan placeholder (?) dalam query
+- Bind parameter dengan tipe data yang tepat
+- Avoid dynamic query building
+- Use stored procedures jika memungkinkan
+
+5. XSS PREVENTION
+================
+
+A. Output Encoding:
+```php
+// Escape output ke HTML
+echo htmlspecialchars($user_input, ENT_QUOTES, 'UTF-8');
+
+// Untuk data yang sudah ada di database
+echo htmlentities($data_from_db, ENT_QUOTES, 'UTF-8');
+```
+
+B. Content Security Policy:
+```html
+<!-- CSP header untuk prevent XSS -->
+<meta http-equiv="Content-Security-Policy" 
+      content="default-src 'self'; script-src 'self' 'unsafe-inline';">
+```
+
+C. Input Filtering:
+- Strip <script> tags
+- Filter dangerous HTML elements
+- Validate URL inputs
+- Sanitize file uploads
+
+6. CSRF PROTECTION
+==================
+
+A. CSRF Token:
+```php
+// Generate CSRF token
+if (!isset($_SESSION['csrf_token'])) {
+    $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
+}
+
+// Validate CSRF token
+if ($_POST) {
+    if (!isset($_POST['csrf_token']) || 
+        $_POST['csrf_token'] !== $_SESSION['csrf_token']) {
+        die('CSRF token mismatch!');
+    }
+}
+```
+
+B. Token in Forms:
+```html
+<!-- Hidden CSRF token di form -->
+<form method="POST">
+    <input type="hidden" name="csrf_token" value="<?= $_SESSION['csrf_token'] ?>">
+    <!-- form fields -->
+</form>
+```
+
+7. FILE UPLOAD SECURITY
+=======================
+
+A. File Type Validation:
+```php
+$allowed_types = ['jpg', 'jpeg', 'png', 'gif', 'pdf'];
+$file_ext = strtolower(pathinfo($_FILES['file']['name'], PATHINFO_EXTENSION));
+
+if (!in_array($file_ext, $allowed_types)) {
+    die('File type not allowed!');
+}
+```
+
+B. File Size Limitation:
+```php
+$max_size = 5 * 1024 * 1024; // 5MB
+if ($_FILES['file']['size'] > $max_size) {
+    die('File size too large!');
+}
+```
+
+C. Secure Upload Directory:
+- Upload ke folder di luar document root
+- Rename file dengan unique name
+- Disable script execution di upload folder
+- Scan for malware jika memungkinkan
+
+8. DATABASE SECURITY
+====================
+
+A. Connection Security:
+- Use SSL connection ke database
+- Strong password untuk database user
+- Limit database user privileges
+- Different user untuk different operations
+
+B. Data Encryption:
+- Encrypt sensitive data (password, PII)
+- Use strong encryption algorithm
+- Manage encryption keys securely
+- Encrypt database backup
+
+C. Database Hardening:
+- Disable unnecessary features
+- Regular security updates
+- Monitor database logs
+- Backup dan disaster recovery plan
+
+9. ERROR HANDLING
+================
+
+A. Secure Error Messages:
+```php
+// SALAH - Expose sensitive info
+die("Database connection failed: " . mysqli_error($conn));
+
+// BENAR - Generic error message
+if (!$conn) {
+    error_log("Database connection failed: " . mysqli_error($conn));
+    die("System temporarily unavailable. Please try again later.");
+}
+```
+
+B. Error Logging:
+- Log errors to file, not display
+- Include timestamp dan IP address
+- Rotate log files regularly
+- Monitor error patterns
+
+C. Debug Mode:
+- Disable debug mode di production
+- Hide PHP error messages
+- Custom error pages
+- Log debugging info secara terpisah
+
+10. NETWORK SECURITY
+===================
+
+A. HTTPS Implementation:
+- Force HTTPS untuk semua pages
+- Secure cookies dengan HTTPS only
+- HSTS header untuk browser
+- Valid SSL certificate
+
+B. HTTP Headers:
+```php
+// Security headers
+header('X-Content-Type-Options: nosniff');
+header('X-Frame-Options: DENY');
+header('X-XSS-Protection: 1; mode=block');
+header('Strict-Transport-Security: max-age=31536000');
+```
+
+C. IP Filtering:
+- Whitelist IP untuk admin access
+- Block suspicious IP addresses
+- Rate limiting untuk prevent brute force
+- Geolocation blocking jika perlu
+
+11. BACKUP SECURITY
+==================
+
+A. Backup Encryption:
+- Encrypt backup files
+- Secure backup storage location
+- Regular backup testing
+- Off-site backup storage
+
+B. Access Control:
+- Limit access ke backup files
+- Audit backup access
+- Secure backup restoration process
+- Version control untuk backups
+
+12. SECURITY TESTING
+===================
+
+A. Regular Testing:
+- Penetration testing
+- Vulnerability scanning
+- Code review for security
+- User access audit
+
+B. Security Monitoring:
+- Monitor login attempts
+- Track administrative actions
+- Alert untuk suspicious activities
+- Regular security log review
+
+C. Incident Response:
+- Security incident plan
+- Contact information untuk emergency
+- Backup restoration procedure
+- Communication plan untuk users
+
+CATATAN PENTING:
+===============
+- Security adalah ongoing process, bukan one-time setup
+- Regular update sistem dan dependencies
+- Train users tentang security best practices
+- Document semua security measures
+- Regular security audit dan review

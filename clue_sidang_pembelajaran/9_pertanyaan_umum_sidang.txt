@@ -1,0 +1,271 @@
+
+==============================================
+PERTANYAAN UMUM SIDANG & JAWABAN
+==============================================
+
+1. PERTANYAAN TENTANG LATAR BELAKANG
+====================================
+
+Q1: "Mengapa memilih perpustakaan sebagai objek penelitian?"
+A1: "Perpustakaan SMK YMIK masih menggunakan sistem manual dengan pencatatan buku besar. Ini menyebabkan kesulitan dalam pencarian data, rawan kehilangan catatan, dan proses peminjaman-pengembalian yang lama. Sistem digital akan meningkatkan efisiensi dan akurasi."
+
+Q2: "Apa masalah utama sistem manual yang ada?"
+A2: "Masalah utama: 
+- Pencarian data lambat dan sulit
+- Risiko kehilangan catatan fisik
+- Kesulitan monitoring stok dan peminjaman
+- Laporan manual membutuhkan waktu lama
+- Tidak ada backup otomatis
+- Proses pelayanan siswa kurang efisien"
+
+Q3: "Mengapa tidak menggunakan sistem perpustakaan yang sudah ada?"
+A3: "Sistem existing umumnya mahal dan kompleks untuk SMK. Sistem custom ini disesuaikan dengan kebutuhan spesifik SMK YMIK, lebih cost-effective, dan dapat dikustomisasi sesuai perkembangan kebutuhan sekolah."
+
+2. PERTANYAAN METODOLOGI
+=======================
+
+Q4: "Mengapa memilih metode waterfall/agile?"
+A4: "Memilih waterfall karena:
+- Requirement sudah jelas dari awal
+- Timeline proyek fixed
+- Team development kecil
+- Budget terbatas
+- Stakeholder menginginkan deliverable yang jelas di setiap fase"
+
+Q5: "Bagaimana proses requirement gathering?"
+A5: "Proses requirement gathering:
+- Interview dengan kepala perpustakaan dan petugas
+- Observasi proses manual existing
+- Analisis dokumen dan form yang digunakan
+- Survey kepuasan user terhadap sistem manual
+- Benchmarking dengan sistem perpustakaan lain"
+
+Q6: "Apa tools yang digunakan untuk analisis dan design?"
+A6: "Tools yang digunakan:
+- Microsoft Visio untuk flowchart dan DFD
+- MySQL Workbench untuk database design
+- Draw.io untuk use case diagram
+- Microsoft Project untuk project timeline
+- VS Code untuk development"
+
+3. PERTANYAAN TEKNIS
+===================
+
+Q7: "Mengapa memilih PHP dan MySQL?"
+A7: "Alasan memilih PHP-MySQL:
+- PHP mudah dipelajari dan banyak dokumentasi
+- MySQL stable dan reliable untuk aplikasi medium
+- Hosting murah dan mudah ditemukan
+- Banyak community support
+- Cocok untuk rapid development
+- Integration yang baik antara PHP-MySQL"
+
+Q8: "Bagaimana menangani security sistem?"
+A8: "Security measures yang diimplementasi:
+- Password hashing untuk authentication
+- Prepared statements untuk prevent SQL injection
+- Input validation dan sanitization
+- Session management dengan timeout
+- Role-based access control
+- HTTPS untuk data transmission
+- Regular backup untuk data protection"
+
+Q9: "Bagaimana sistem menangani concurrent users?"
+A9: "Handling concurrent users:
+- PHP naturally support multi-user
+- MySQL innodb engine support concurrent connections
+- Database transaction untuk data consistency
+- Session isolation untuk setiap user
+- Optimistic locking untuk prevent race condition"
+
+Q10: "Apa yang dilakukan jika database crash?"
+A10: "Disaster recovery plan:
+- Regular automated backup (daily)
+- Multiple backup locations (local + cloud)
+- Database replication jika memungkinkan
+- Recovery procedure dengan RTO < 1 hour
+- Data integrity verification after restore
+- Rollback plan jika restore gagal"
+
+4. PERTANYAAN FUNGSIONAL
+=======================
+
+Q11: "Fitur apa saja yang ada di sistem?"
+A11: "Fitur utama sistem:
+- Master data (buku, siswa, petugas)
+- Transaksi (peminjaman, pengembalian)  
+- Manajemen denda otomatis
+- Laporan dan statistik
+- User management dengan role
+- Dashboard dengan overview
+- Search dan filter data
+- Print receipt dan laporan"
+
+Q12: "Bagaimana sistem menghitung denda?"
+A12: "Perhitungan denda:
+- Denda keterlambatan: Rp 1000 per hari
+- Denda kerusakan: Rp 10.000 flat
+- Denda kehilangan: 100% harga buku
+- Sistem otomatis hitung based pada tanggal kembali
+- Status denda (lunas/belum lunas)
+- History pembayaran denda"
+
+Q13: "Apa business rules yang diterapkan?"
+A13: "Business rules:
+- Maksimal 3 buku per siswa
+- Durasi peminjaman 7 hari
+- Siswa harus status aktif untuk meminjam
+- Tidak bisa pinjam jika ada denda tertunggak
+- Stok buku harus tersedia
+- Auto logout setelah 30 menit idle"
+
+5. PERTANYAAN IMPLEMENTASI
+=========================
+
+Q14: "Bagaimana proses testing sistem?"
+A14: "Testing yang dilakukan:
+- Unit testing untuk setiap function
+- Integration testing untuk workflow
+- User Acceptance Testing dengan sample user
+- Performance testing dengan dummy data
+- Security testing untuk vulnerability
+- Browser compatibility testing
+- Mobile responsiveness testing"
+
+Q15: "Apa kendala yang dihadapi saat development?"
+A15: "Kendala yang dihadapi:
+- Learning curve untuk framework baru
+- Optimasi query untuk performance
+- Responsive design untuk mobile
+- Integration dengan existing data
+- User training untuk sistem baru
+- Solusi: Research, trial-error, consultation"
+
+Q16: "Bagaimana user training dilakukan?"
+A16: "User training plan:
+- Training manual dan video tutorial
+- Hands-on training session
+- Gradual rollout per department
+- Support selama masa transisi
+- Regular feedback collection
+- Continuous improvement based feedback"
+
+6. PERTANYAAN EVALUASI
+=====================
+
+Q17: "Bagaimana mengukur keberhasilan sistem?"
+A17: "KPI keberhasilan sistem:
+- Waktu proses peminjaman berkurang 70%
+- Akurasi data meningkat 95%
+- User satisfaction score > 4/5
+- Error rate < 1%
+- System uptime > 99%
+- ROI positif dalam 6 bulan"
+
+Q18: "Apa kelebihan sistem dibanding manual?"
+A18: "Kelebihan sistem digital:
+- Proses lebih cepat dan efisien
+- Data tersimpan aman dengan backup
+- Laporan real-time dan akurat
+- Pencarian data instan
+- Mengurangi human error
+- Monitoring yang lebih baik
+- Scalable untuk pertumbuhan"
+
+Q19: "Apa kekurangan atau limitasi sistem?"
+A19: "Limitasi sistem saat ini:
+- Butuh koneksi internet untuk optimal
+- Perlu training user untuk adaptasi
+- Dependency pada electricity
+- Initial cost untuk hardware
+- Maintenance cost untuk hosting
+- Future: mobile app, notification system"
+
+7. PERTANYAAN PENGEMBANGAN
+=========================
+
+Q20: "Apa rencana pengembangan selanjutnya?"
+A20: "Future development roadmap:
+- Mobile application (Android/iOS)
+- Email notification system  
+- Barcode/QR scanner integration
+- Advanced analytics dashboard
+- API untuk integration pihak ketiga
+- Multi-language support
+- Cloud deployment untuk scalability"
+
+Q21: "Bagaimana sistem ini bisa di-scale up?"
+A21: "Scalability options:
+- Database optimization dan indexing
+- Load balancing untuk high traffic
+- Cloud hosting untuk flexibility
+- Microservices architecture
+- Caching layer untuk performance
+- CDN untuk static assets
+- Horizontal scaling sesuai kebutuhan"
+
+Q22: "Apakah sistem bisa digunakan sekolah lain?"
+A22: "Portability ke sekolah lain:
+- Sistem dirancang modular dan configurable
+- Database structure generic untuk perpustakaan
+- UI/UX dapat dikustomisasi per sekolah
+- Multi-tenant architecture untuk SaaS
+- White-label solution untuk branding
+- Installation guide untuk deployment"
+
+8. PERTANYAAN BISNIS
+===================
+
+Q23: "Berapa estimasi cost untuk implementasi?"
+A23: "Cost breakdown estimation:
+- Development: Rp 5-10 juta (internal)
+- Hardware: Rp 3-5 juta (server, network)
+- Software license: Rp 1-2 juta/tahun
+- Training: Rp 1-2 juta
+- Maintenance: Rp 2-3 juta/tahun
+- Total first year: Rp 12-22 juta"
+
+Q24: "Bagaimana ROI sistem ini?"
+A24: "ROI calculation:
+- Cost saving: efisiensi waktu staff
+- Reduced paper cost untuk manual system
+- Better inventory control reduce loss
+- Improved service quality
+- Estimated payback period: 6-12 bulan
+- Long term benefit: scalability dan growth"
+
+Q25: "Apa impact ke operasional sekolah?"
+A25: "Impact ke operasional:
+- Proses perpustakaan lebih efficient
+- Staff bisa focus ke service quality
+- Better data untuk decision making
+- Improved student experience
+- Professional image untuk sekolah
+- Foundation untuk digital transformation"
+
+TIPS MENJAWAB PERTANYAAN:
+========================
+
+1. Dengarkan pertanyaan sampai selesai
+2. Pause sebentar untuk think
+3. Jawab dengan struktur: Point utama → Detail → Example
+4. Gunakan data dan fakta jika ada
+5. Jika tidak tahu, jujur dan offer research
+6. Stay confident tapi humble
+7. Thank setiap pertanyaan
+8. Connect ke business value
+9. Show technical competency
+10. Demonstrate problem-solving skill
+
+PERSIAPAN:
+=========
+- Practice dengan teman/keluarga
+- Record diri sendiri menjawab
+- Prepare data dan statistik
+- Know sistem inside-out
+- Understand business context
+- Stay updated dengan technology trend
+- Prepare demo yang smooth
+- Backup plan jika demo gagal
+
+Remember: Tujuan sidang adalah evaluasi kemampuan Anda dalam problem solving, technical skill, dan communication. Show passion dan ownership terhadap project!
